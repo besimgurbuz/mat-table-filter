@@ -1,0 +1,56 @@
+{
+  "name": "mat-table-filter",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mat-table-filter/src",
+  "prefix": "mat-table-filter",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": [
+        "{workspaceRoot}/dist/{projectRoot}"
+      ],
+      "options": {
+        "project": "libs/mat-table-filter/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/mat-table-filter/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/mat-table-filter/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "libs/mat-table-filter/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "libs/mat-table-filter/**/*.ts",
+          "libs/mat-table-filter/**/*.html"
+        ]
+      }
+    }
+  }
+}
