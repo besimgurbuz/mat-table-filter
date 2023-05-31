@@ -2,7 +2,9 @@
   "name": "@mat-table-filter/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nx serve demo"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~16.0.0",
