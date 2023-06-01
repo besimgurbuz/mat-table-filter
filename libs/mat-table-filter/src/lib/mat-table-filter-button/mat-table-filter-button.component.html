@@ -1,3 +1,39 @@
-<button mat-icon-button class="mat-table-filter-button">
+<button
+  mat-icon-button
+  class="mat-table-filter-button"
+  [matMenuTriggerFor]="filterMenu"
+>
   <mat-icon>filter_alt</mat-icon>
 </button>
+<mat-menu #filterMenu="matMenu">
+  <form
+    class="mat-table-filter-form"
+    [formGroup]="_filterFormGroup"
+    (click)="$event.stopPropagation()"
+  >
+    <mat-form-field>
+      <mat-label>Operators</mat-label>
+      <mat-select formControlName="operator">
+        <mat-option *ngFor="let operator of operators" [value]="operator">{{
+          operator
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Input</mat-label>
+      <input matInput formControlName="input" />
+    </mat-form-field>
+    <div class="action-buttons">
+      <button mat-stroked-button type="reset" (click)="handleCancelClick()">
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="_filterFormGroup.invalid"
+      >
+        Apply
+      </button>
+    </div>
+  </form>
+</mat-menu>

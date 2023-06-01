@@ -1,0 +1,11 @@
+.mat-table-filter-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+  .action-buttons {
+    margin-left: auto;
+    display: flex;
+    gap: 5px
+  }
+}

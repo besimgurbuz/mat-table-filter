@@ -3,17 +3,17 @@ import {NgModule} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTableFilterButtonComponent} from './mat-table-filter-button/mat-table-filter-button.component';
-import {MatTableFilterHeaderDirective} from './mat-table-filter-header.directive';
+import {MatTableFilterHeader} from './mat-table-filter-header';
 import {MatTableFilterDirective} from './mat-table-filter.directive';
 
 @NgModule({
-  declarations: [MatTableFilterButtonComponent, MatTableFilterDirective],
+  declarations: [MatTableFilterDirective, MatTableFilterHeader],
   imports: [
     CommonModule,
+    MatTableFilterButtonComponent,
     MatButtonModule,
     MatIconModule,
-    MatTableFilterHeaderDirective,
   ],
-  exports: [MatTableFilterDirective, MatTableFilterHeaderDirective],
+  exports: [MatTableFilterDirective, MatTableFilterHeader],
 })
 export class MatTableFilterModule {}

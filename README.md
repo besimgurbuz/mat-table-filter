@@ -15,8 +15,8 @@ Assuming your application is already up and running using Angular Material, you 
 2. Import the `MatTableFilterModule` and add it to the module that declares your component:
 
    ```ts
-   import { MatTableModule } from '@angular/material/table';
-   import { MatTableFilterModule } from 'mat-table-filter';
+   import {MatTableModule} from '@angular/material/table';
+   import {MatTableFilterModule} from 'mat-table-filter';
 
    @NgModule({
      declarations: [MyComponent],
@@ -29,13 +29,13 @@ Assuming your application is already up and running using Angular Material, you 
 
    ```html
    <table mat-table mat-table-filter [dataSource]="dataSource">
-     <ng-container mat-table-filter-header matColumnDef="position">
-       <th mat-header-cell *matHeaderCellDef>No.</th>
+     <ng-container matColumnDef="position">
+       <th mat-header-cell mat-table-filter-header *matHeaderCellDef>No.</th>
        <td mat-cell *matCellDef="let data">{{data.position}}</td>
      </ng-container>
 
-     <ng-container mat-table-filter-header matColumnDef="name">
-       <th mat-header-cell *matHeaderCellDef>Name</th>
+     <ng-container matColumnDef="name">
+       <th mat-header-cell mat-table-filter-header *matHeaderCellDef>Name</th>
        <td mat-cell *matCellDef="let data">{{data.name}}</td>
      </ng-container>
 
@@ -43,3 +43,16 @@ Assuming your application is already up and running using Angular Material, you 
      <tr mat-row *matRowDef="let row; columns: myColumns;"></tr>
    </table>
    ```
+
+### Using `mat-filter-table-header` with `mat-sort-header`
+
+To use both `mat-filter-table-header` and `mat-sort-header` together:
+
+```html
+<ng-container matColumnDef="position">
+  <th mat-header-cell mat-table-filter-header *matHeaderCellDef>
+    <div mat-sort-header>No.</div>
+  </th>
+  <td mat-cell *matCellDef="let data">{{data.position}}</td>
+</ng-container>
+```

@@ -8,14 +8,14 @@ import {
 } from '@angular/core';
 import {MatTable} from '@angular/material/table';
 import {Subscription, merge, of, switchMap} from 'rxjs';
-import {MatTableFilterHeaderDirective} from './mat-table-filter-header.directive';
+import {MatTableFilterHeader} from './mat-table-filter-header';
 
 @Directive({
   selector: 'mat-table[matTableFilter],[mat-table][matTableFilter]',
 })
 export class MatTableFilterDirective implements AfterViewInit {
-  @ContentChildren(MatTableFilterHeaderDirective)
-  filterableHeaders!: QueryList<MatTableFilterHeaderDirective>;
+  @ContentChildren(MatTableFilterHeader)
+  filterableHeaders!: QueryList<MatTableFilterHeader>;
 
   _filterChangeSubs?: Subscription;
 
@@ -24,7 +24,7 @@ export class MatTableFilterDirective implements AfterViewInit {
   ngAfterViewInit(): void {
     this._filterChangeSubs = this.filterableHeaders.changes
       .pipe(
-        switchMap((headers: QueryList<MatTableFilterHeaderDirective>) => {
+        switchMap((headers: QueryList<MatTableFilterHeader>) => {
           if (headers.length <= 0) return of();
           return merge(...headers.map((header) => header.selectedFilter$));
         })

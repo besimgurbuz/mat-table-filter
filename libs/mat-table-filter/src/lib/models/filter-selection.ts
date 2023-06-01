@@ -1,10 +1,10 @@
 export type MatTableDefaultFilterSelection = {
   key: string;
-  operator: MatTableFilterDefaultOperator;
+  operator?: MatTableFilterDefaultOperator;
   input?: string;
 };
 
-export const MAT_TABLE_FILTER_DEFAULT_OPERATORS = {
+export const MAT_TABLE_FILTER_DEFAULT_OPERATORS_MAP = {
   CONTAINS: 'CONTAINS',
   NOT_CONTAINS: 'NOT_CONTAINS',
   EQUALS: 'EQUALS',
@@ -16,4 +16,8 @@ export const MAT_TABLE_FILTER_DEFAULT_OPERATORS = {
 } as const;
 
 export type MatTableFilterDefaultOperator =
-  keyof typeof MAT_TABLE_FILTER_DEFAULT_OPERATORS;
+  keyof typeof MAT_TABLE_FILTER_DEFAULT_OPERATORS_MAP;
+
+export const MAT_TABLE_FILTER_DEFAULT_OPERATORS = Object.values(
+  MAT_TABLE_FILTER_DEFAULT_OPERATORS_MAP
+);
