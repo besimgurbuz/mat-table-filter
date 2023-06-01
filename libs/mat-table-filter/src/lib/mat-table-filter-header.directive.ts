@@ -1,11 +1,13 @@
 import {
+  ApplicationRef,
+  ComponentFactoryResolver,
   ComponentRef,
   Directive,
   ElementRef,
   HostBinding,
+  Injector,
   OnInit,
   Renderer2,
-  ViewContainerRef,
   inject,
 } from '@angular/core';
 import {Observable, of} from 'rxjs';
@@ -20,21 +22,42 @@ import {
   standalone: true,
 })
 export class MatTableFilterHeaderDirective implements OnInit {
-  private _triggererComponentType = inject(MAT_TABLE_TRIGGERER_TYPE);
   private renderer = inject(Renderer2);
   private elementRef = inject(ElementRef);
-  private viewContainerRef = inject(ViewContainerRef);
-
+  // TODO: replace the depricated ComponentFacotryResolver with ViewContainerRef when hostElement option has released
+  private componentFactoryResolver = inject(ComponentFactoryResolver);
+  private injector = inject(Injector);
+  private appRef = inject(ApplicationRef);
+  private _triggererComponentType = inject(MAT_TABLE_TRIGGERER_TYPE);
   private _filterTriggererComponent?: ComponentRef<MatTableTriggerer<unknown>>;
 
   @HostBinding('class')
   _className = 'mat-table-filter-header';
 
   ngOnInit(): void {
-    this.viewContainerRef.createComponent(this._triggererComponentType, {});
+    this._embedTriggerer();
   }
 
   get selectedFilter$(): Observable<unknown> {
     return of('filter');
+  }
+
+  private _embedTriggerer() {
+    const container = this.renderer.createElement('div');
+    this.renderer.setAttribute(
+      container,
+      'class',
+      'mat-table-filter-header-container'
+    );
+    this.renderer.appendChild(this.elementRef.nativeElement, container);
+    const triggerer = this.componentFactoryResolver.resolveComponentFactory(
+      this._triggererComponentType
+    );
+    this._filterTriggererComponent = triggerer.create(
+      this.injector,
+      [],
+      container
+    );
+    this.appRef.attachView(this._filterTriggererComponent.hostView);
   }
 }

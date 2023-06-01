@@ -11,7 +11,7 @@ import {Subscription, merge, of, switchMap} from 'rxjs';
 import {MatTableFilterHeaderDirective} from './mat-table-filter-header.directive';
 
 @Directive({
-  selector: 'mat-table[mat-table-filter],[mat-table][mat-table-filter]',
+  selector: 'mat-table[matTableFilter],[mat-table][matTableFilter]',
 })
 export class MatTableFilterDirective implements AfterViewInit {
   @ContentChildren(MatTableFilterHeaderDirective)
@@ -19,9 +19,7 @@ export class MatTableFilterDirective implements AfterViewInit {
 
   _filterChangeSubs?: Subscription;
 
-  constructor(@Host() @Self() private _matTable: MatTable<unknown>) {
-    console.log('mat-table-filter: injected');
-  }
+  constructor(@Host() @Self() private _matTable: MatTable<unknown>) {}
 
   ngAfterViewInit(): void {
     this._filterChangeSubs = this.filterableHeaders.changes

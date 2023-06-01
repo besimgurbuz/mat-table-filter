@@ -14,4 +14,7 @@ export class MatTableTriggerer<T> {
 
 export const MAT_TABLE_TRIGGERER_TYPE = new InjectionToken<
   Type<MatTableTriggerer<any>>
->('', {providedIn: 'root', factory: () => MatTableFilterButtonComponent});
+>('Component type for MatTableFilter to use in headers', {
+  providedIn: 'root',
+  factory: () => MatTableFilterButtonComponent,
+});

@@ -1,6 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
+import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatTableFilterModule} from 'mat-table-filter';
 
@@ -26,7 +27,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatTableModule, MatTableFilterModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatTableModule,
+    MatSortModule,
+    MatTableFilterModule,
+  ],
   selector: 'mat-table-filter-demo-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
