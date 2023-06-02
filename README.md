@@ -28,7 +28,7 @@ Assuming your application is already up and running using Angular Material, you 
 3. Use the directives in your component's template:
 
    ```html
-   <table mat-table mat-table-filter [dataSource]="dataSource">
+   <table mat-table matTableFilter [dataSource]="dataSource">
      <ng-container matColumnDef="position">
        <th mat-header-cell mat-table-filter-header *matHeaderCellDef>No.</th>
        <td mat-cell *matCellDef="let data">{{data.position}}</td>
