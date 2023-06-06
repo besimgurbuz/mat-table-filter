@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {
   MatTableDefaultFilterSelection,
   MatTableFilterDefaultOperator,
-} from './models';
+} from '../models';
 
 @Injectable()
 export class MatTableFilterService {
@@ -16,19 +16,16 @@ export class MatTableFilterService {
   > = {
     EQUALS: (value, input) => value == input,
     NOT_EQAUL: (value, input) => value != input,
-    NUM_LESS_THAN: (value, input) => Number(value) < Number(input),
-    NUM_GREATER_THAN: (value, input) => Number(value) > Number(input),
-    NUM_LESS_THAN_OR_EQUAL_TO: (value, input) => Number(value) <= Number(input),
-    NUM_GREATER_THAN_OR_EQUAL_TO: (value, input) =>
-      Number(value) >= Number(input),
-    STR_CONTAINS: (value, input) => value.toString().includes(input as string),
-    STR_NOT_CONTAINS: (value, input) =>
-      !value.toString().includes(input as string),
-    STR_STARTS_WITH: (value, input) =>
-      value.toString().startsWith(input as string),
-    STR_ENDS_WITH: (value, input) => value.toString().endsWith(input as string),
-    STR_BLANK: (value) => !!value === false,
-    STR_NOT_BLANK: (value) => !!value === true,
+    LESS_THAN: (value, input) => Number(value) < Number(input),
+    GREATER_THAN: (value, input) => Number(value) > Number(input),
+    LESS_THAN_OR_EQUAL_TO: (value, input) => Number(value) <= Number(input),
+    GREATER_THAN_OR_EQUAL_TO: (value, input) => Number(value) >= Number(input),
+    CONTAINS: (value, input) => value.toString().includes(input as string),
+    NOT_CONTAINS: (value, input) => !value.toString().includes(input as string),
+    STARTS_WITH: (value, input) => value.toString().startsWith(input as string),
+    ENDS_WITH: (value, input) => value.toString().endsWith(input as string),
+    BLANK: (value) => !!value === false,
+    NOT_BLANK: (value) => !!value === true,
   };
 
   public defaultFilterPredicate = (

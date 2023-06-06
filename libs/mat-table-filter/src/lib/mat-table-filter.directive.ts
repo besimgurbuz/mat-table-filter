@@ -9,7 +9,7 @@ import {
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {Subscription, merge, of, switchMap} from 'rxjs';
 import {MatTableFilterHeader} from './mat-table-filter-header';
-import {MatTableFilterService} from './mat-table-filter.service';
+import {MatTableFilterService} from './services/mat-table-filter.service';
 
 @Directive({
   selector: 'mat-table[matTableFilter],[mat-table][matTableFilter]',

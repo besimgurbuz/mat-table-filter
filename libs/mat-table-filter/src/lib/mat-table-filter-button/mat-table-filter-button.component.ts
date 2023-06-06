@@ -1,4 +1,3 @@
-import {CommonModule} from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -6,19 +5,10 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import {MatBadgeModule} from '@angular/material/badge';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
-import {MatSelectChange, MatSelectModule} from '@angular/material/select';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatMenuTrigger} from '@angular/material/menu';
+import {MatSelectChange} from '@angular/material/select';
 import {MatTableTriggerer} from '../mat-table-filter-triggerer';
 import {
   MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS,
@@ -26,21 +16,10 @@ import {
   MatTableDefaultFilterSelection,
   MatTableFilterDefaultOperator,
 } from '../models/filter-selection';
+import {MatTableFilterIntlService} from '../services/mat-table-filter-intl.service';
 
 @Component({
   selector: 'mat-table-filter-button',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatBadgeModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatSelectModule,
-  ],
   templateUrl: './mat-table-filter-button.component.html',
   styleUrls: ['./mat-table-filter-button.component.scss'],
 })
@@ -48,6 +27,7 @@ export class MatTableFilterButtonComponent
   extends MatTableTriggerer<MatTableDefaultFilterSelection>
   implements OnInit
 {
+  public intlService = inject(MatTableFilterIntlService);
   private cd = inject(ChangeDetectorRef);
   operators: MatTableFilterDefaultOperator[] = [];
   _filterFormGroup: FormGroup = new FormGroup({
@@ -59,8 +39,8 @@ export class MatTableFilterButtonComponent
   _isFilterApplied = false;
   _requiresInput = true;
   _noInputRequireOperations: MatTableFilterDefaultOperator[] = [
-    'STR_BLANK',
-    'STR_NOT_BLANK',
+    'BLANK',
+    'NOT_BLANK',
   ];
 
   @ViewChild(MatMenuTrigger) private menuTrigger!: MatMenuTrigger;
@@ -71,6 +51,9 @@ export class MatTableFilterButtonComponent
     } else if (this.headerType === 'number') {
       this.operators = MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS;
     }
+    this.intlService.changed$
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.cd.markForCheck());
   }
 
   handleFormSubmit() {

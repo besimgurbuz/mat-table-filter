@@ -33,23 +33,23 @@
       (click)="$event.stopPropagation()"
     >
       <mat-form-field>
-        <mat-label>Operators</mat-label>
+        <mat-label>{{ intlService.translations.operatorsLabel }}</mat-label>
         <mat-select
           formControlName="operator"
           (selectionChange)="handleOperatorSelection($event)"
         >
           <mat-option *ngFor="let operator of operators" [value]="operator">{{
-            operator
+            intlService.translations.operators[operator]
           }}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field *ngIf="_requiresInput">
-        <mat-label>Input</mat-label>
+        <mat-label>{{ intlService.translations.inputLabel }}</mat-label>
         <input matInput formControlName="input" />
       </mat-form-field>
       <div class="action-buttons">
         <button mat-stroked-button type="reset" (click)="handleCancelClick()">
-          Cancel
+          {{ intlService.translations.cancel }}
         </button>
         <button
           mat-raised-button
@@ -57,7 +57,7 @@
           color="primary"
           [disabled]="_filterFormGroup.invalid"
         >
-          Apply
+          {{ intlService.translations.apply }}
         </button>
       </div>
     </form>

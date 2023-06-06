@@ -1,6 +1,7 @@
 # ng-mat-table-filter
 
 This library adds MatSort like filter functionality to [MatTable component](https://material.angular.io/components/table/overview).
+Add filtering functionality to column definition you want by simply adding `mat-table-filter-header` just like `mat-sort-header`
 
 ## How to use
 
@@ -56,3 +57,46 @@ To use both `mat-filter-table-header` and `mat-sort-header` together:
   <td mat-cell *matCellDef="let data">{{data.position}}</td>
 </ng-container>
 ```
+
+### Rendered template
+
+As default `MatTableFilterComponent` using for filter triggerer. But you can give your custom components that extends `MatTableTriggerer<T>` base class as well:
+
+```ts
+import {MatTableModule} from '@angular/material/table';
+import {MAT_TABLE_TRIGGERER_TYPE, MatTableDefaultFilterSelection, MatTableFilterModule, MatTableTriggerer} from 'ng-mat-table-filter';
+
+@Component({
+  /**/
+})
+class MyCustomComponent extends MatTableTriggerer<MatTableDefaultFilterSelection> {}
+
+@NgModule({
+  declarations: [MyComponent],
+  imports: [MatTableModule, MatTableFilterModule],
+  providers: [
+    {
+      provide: MAT_TABLE_TRIGGERER_TYPE,
+      useValue: Type<MyCustomComponent>,
+    },
+  ],
+})
+export class MyModule {}
+```
+
+### Header type
+
+There are 3 different types of default `MatTableFilterButton`. `string`, `number` and `boolean`. By default every filter header directive type is `string`. You can define the type by giving `matTableFilterHeaderType` input to `mat-table-filter-header`;
+
+```html
+<ng-container matColumnDef="weight">
+  <th mat-header-cell mat-table-filter-header matTableFilterHeaderType="number" *matHeaderCellDef>Weight</th>
+  <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+</ng-container>
+<ng-container matColumnDef="learned">
+  <th mat-header-cell mat-table-filter-header matTableFilterHeaderType="boolean" *matHeaderCellDef>Learned</th>
+  <td mat-cell *matCellDef="let element">{{ element.learned ? 'Yes' : 'No' }}</td>
+</ng-container>
+```
+
+[Live stackblitz demo](https://stackblitz-starters-ptbjcs.stackblitz.io)
