@@ -2,26 +2,35 @@ import {
   AfterViewInit,
   ContentChildren,
   Directive,
-  Host,
+  Input,
   QueryList,
-  Self,
+  inject,
 } from '@angular/core';
-import {MatTable} from '@angular/material/table';
+import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {Subscription, merge, of, switchMap} from 'rxjs';
 import {MatTableFilterHeader} from './mat-table-filter-header';
+import {MatTableFilterService} from './mat-table-filter.service';
 
 @Directive({
   selector: 'mat-table[matTableFilter],[mat-table][matTableFilter]',
+  providers: [MatTableFilterService],
 })
 export class MatTableFilterDirective implements AfterViewInit {
+  private filterService = inject(MatTableFilterService);
+  private _matTable = inject(MatTable, {host: true, self: true});
+
+  @Input()
+  matTableFilterPredicate?: MatTableDataSource<
+    Record<string, unknown>
+  >['filterPredicate'];
+
   @ContentChildren(MatTableFilterHeader)
   filterableHeaders!: QueryList<MatTableFilterHeader>;
 
   _filterChangeSubs?: Subscription;
 
-  constructor(@Host() @Self() private _matTable: MatTable<unknown>) {}
-
   ngAfterViewInit(): void {
+    this._setupFilter();
     this._filterChangeSubs = this.filterableHeaders.changes
       .pipe(
         switchMap((headers: QueryList<MatTableFilterHeader>) => {
@@ -30,7 +39,19 @@ export class MatTableFilterDirective implements AfterViewInit {
         })
       )
       .subscribe((selection) => {
-        console.log(selection);
+        this.filterService.updateFilter(selection);
+        (
+          this._matTable.dataSource as MatTableDataSource<
+            Record<string, unknown>
+          >
+        ).filter = JSON.stringify(this.filterService.currentFilters);
       });
+  }
+
+  private _setupFilter(): void {
+    (
+      this._matTable.dataSource as MatTableDataSource<Record<string, unknown>>
+    ).filterPredicate =
+      this.matTableFilterPredicate || this.filterService.defaultFilterPredicate;
   }
 }

@@ -1,22 +1,22 @@
-# MatTableFilter
+# ng-mat-table-filter
 
-This library adds very flexible filter functionality to [MatTable component](https://material.angular.io/components/table/overview).
+This library adds MatSort like filter functionality to [MatTable component](https://material.angular.io/components/table/overview).
 
 ## How to use
 
 Assuming your application is already up and running using Angular Material, you can add this library by following these steps:
 
-1. Install `mat-table-filter`:
+1. Install `ng-mat-table-filter`:
 
    ```bash
-   npm i mat-table-filter
+   npm i ng-mat-table-filter
    ```
 
 2. Import the `MatTableFilterModule` and add it to the module that declares your component:
 
    ```ts
    import {MatTableModule} from '@angular/material/table';
-   import {MatTableFilterModule} from 'mat-table-filter';
+   import {MatTableFilterModule} from 'ng-mat-table-filter';
 
    @NgModule({
      declarations: [MyComponent],

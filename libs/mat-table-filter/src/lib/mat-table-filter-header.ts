@@ -3,6 +3,8 @@ import {
   AfterViewInit,
   Component,
   ComponentRef,
+  HostListener,
+  Input,
   ViewChild,
   ViewContainerRef,
   inject,
@@ -12,6 +14,8 @@ import {
   MAT_TABLE_TRIGGERER_TYPE,
   MatTableTriggerer,
 } from './mat-table-filter-triggerer';
+import {MatTableDefaultFilterSelection} from './models';
+import {MatTableHeaderType} from './models/header-type';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -21,21 +25,42 @@ import {
   styleUrls: ['./mat-table-filter-header.scss'],
 })
 export class MatTableFilterHeader implements AfterViewInit {
+  @Input({required: false}) matTableFilterHeaderType: MatTableHeaderType =
+    'string';
   private triggererComponentType = inject(MAT_TABLE_TRIGGERER_TYPE);
+  private triggererInstance?: MatTableTriggerer<MatTableDefaultFilterSelection>;
+
+  @HostListener('mouseenter', ['$event'])
+  handleMouseEnter() {
+    if (this.triggererInstance) {
+      this.triggererInstance.parentHovered = true;
+    }
+  }
+
+  @HostListener('mouseleave', ['$event'])
+  handleMouseLeave() {
+    if (this.triggererInstance) {
+      this.triggererInstance.parentHovered = false;
+    }
+  }
 
   @ViewChild('tableFilterTriggerer', {read: ViewContainerRef})
   triggererViewContainerRef!: ViewContainerRef;
 
-  _triggererComponentRef!: ComponentRef<MatTableTriggerer<unknown>>;
+  _triggererComponentRef!: ComponentRef<
+    MatTableTriggerer<MatTableDefaultFilterSelection>
+  >;
 
   ngAfterViewInit(): void {
     this._triggererComponentRef =
       this.triggererViewContainerRef.createComponent(
         this.triggererComponentType
       );
+    this.triggererInstance = this._triggererComponentRef.instance;
+    this.triggererInstance.headerType = this.matTableFilterHeaderType;
   }
 
-  get selectedFilter$(): Observable<unknown> {
+  get selectedFilter$(): Observable<MatTableDefaultFilterSelection> {
     return this._triggererComponentRef?.instance.selectedFilter$;
   }
 }
