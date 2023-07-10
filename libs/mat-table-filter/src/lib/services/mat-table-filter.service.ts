@@ -42,7 +42,14 @@ export class MatTableFilterService {
       const value = data[filter.key] as string | number | boolean;
 
       if (value !== undefined) {
-        return this.operators[filter.operator](value, filter.input);
+        if (filter.isCaseSensitive == false) {
+          return this.operators[filter.operator](
+            value.toString().toLowerCase(),
+            filter.input?.toString().toLowerCase()
+          );
+        } else {
+          return this.operators[filter.operator](value, filter.input);
+        }
       }
       return true;
     });

@@ -4,14 +4,14 @@ import {Observable, Subject} from 'rxjs';
 import {MatTableFilterButtonComponent} from './mat-table-filter-button/mat-table-filter-button.component';
 import {MatTableDefaultFilterSelection} from './models';
 import {MatTableHeaderType} from './models/header-type';
-import { CaseSensitivityType } from './models/case-sensitivity';
+import {CaseSensitivityType} from './models/case-sensivity';
 
 export class MatTableTriggerer<T extends MatTableDefaultFilterSelection> {
   protected matColumnDef = inject(MatColumnDef);
   protected selectedFilterSubject = new Subject<T>();
 
   public headerType!: MatTableHeaderType;
-  public sensitivityType! : CaseSensitivityType;
+  public sensitivityType!: CaseSensitivityType;
   public parentHovered!: boolean;
 
   public get columnKey() {

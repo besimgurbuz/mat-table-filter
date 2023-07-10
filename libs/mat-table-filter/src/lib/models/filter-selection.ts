@@ -4,6 +4,7 @@ export type MatTableDefaultFilterSelection = {
   key: string;
   operator: MatTableFilterDefaultOperator;
   input?: string | boolean | number;
+  isCaseSensitive?: boolean;
 };
 
 const MAT_TABLE_FILTER_STRING_DEFAULT_OPERATORS_MAP = {

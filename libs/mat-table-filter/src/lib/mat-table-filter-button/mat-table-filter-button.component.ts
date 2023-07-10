@@ -60,20 +60,12 @@ export class MatTableFilterButtonComponent
 
   handleFormSubmit() {
     if (this._filterFormGroup.valid) {
-      if(!this.isCaseSensitive){
-        this.selectedFilterSubject.next({
-          key: this.columnKey.toLowerCase().trim(),
-          operator: this._filterFormGroup.get('operator')?.value,
-          input: this._filterFormGroup.get('input')?.value.toLowerCase().trim(),
-        });
-      }else{
-        this.selectedFilterSubject.next({
-          key: this.columnKey,
-          operator: this._filterFormGroup.get('operator')?.value,
-          input: this._filterFormGroup.get('input')?.value,
-        });
-      }
-
+      this.selectedFilterSubject.next({
+        key: this.columnKey,
+        operator: this._filterFormGroup.get('operator')?.value,
+        input: this._filterFormGroup.get('input')?.value,
+        isCaseSensitive: this.isCaseSensitive,
+      });
       this._isFilterApplied = true;
       this.menuTrigger.closeMenu();
     }
