@@ -16,6 +16,7 @@ import {
 } from './mat-table-filter-triggerer';
 import {MatTableDefaultFilterSelection} from './models';
 import {MatTableHeaderType} from './models/header-type';
+import {CaseSensitivityType} from './models/case-sensivity';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -27,6 +28,7 @@ import {MatTableHeaderType} from './models/header-type';
 export class MatTableFilterHeader implements AfterViewInit {
   @Input({required: false}) matTableFilterHeaderType: MatTableHeaderType =
     'string';
+  @Input({required: false}) isHeaderCaseSensitive: CaseSensitivityType = true;
   private triggererComponentType = inject(MAT_TABLE_TRIGGERER_TYPE);
   private triggererInstance?: MatTableTriggerer<MatTableDefaultFilterSelection>;
 
@@ -58,6 +60,7 @@ export class MatTableFilterHeader implements AfterViewInit {
       );
     this.triggererInstance = this._triggererComponentRef.instance;
     this.triggererInstance.headerType = this.matTableFilterHeaderType;
+    this.triggererInstance.sensitivityType = this.isHeaderCaseSensitive;
   }
 
   get selectedFilter$(): Observable<MatTableDefaultFilterSelection> {

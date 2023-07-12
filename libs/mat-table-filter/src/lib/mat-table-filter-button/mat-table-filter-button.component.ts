@@ -29,6 +29,7 @@ export class MatTableFilterButtonComponent
 {
   public intlService = inject(MatTableFilterIntlService);
   private cd = inject(ChangeDetectorRef);
+  private isCaseSensitive = true;
   operators: MatTableFilterDefaultOperator[] = [];
   _filterFormGroup: FormGroup = new FormGroup({
     operator: new FormControl('', [Validators.required]),
@@ -48,6 +49,7 @@ export class MatTableFilterButtonComponent
   ngOnInit(): void {
     if (this.headerType === 'string') {
       this.operators = MAT_TABLE_FILTER_STRING_DEFAULT_OPERATORS;
+      this.isCaseSensitive = this.sensitivityType;
     } else if (this.headerType === 'number') {
       this.operators = MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS;
     }
@@ -62,6 +64,7 @@ export class MatTableFilterButtonComponent
         key: this.columnKey,
         operator: this._filterFormGroup.get('operator')?.value,
         input: this._filterFormGroup.get('input')?.value,
+        isCaseSensitive: this.isCaseSensitive,
       });
       this._isFilterApplied = true;
       this.menuTrigger.closeMenu();
