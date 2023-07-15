@@ -1,14 +1,17 @@
 import {
   ChangeDetectorRef,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
+  computed,
   inject,
+  signal,
 } from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {MatSelectChange} from '@angular/material/select';
+import {Subscription} from 'rxjs';
 import {MatTableTriggerer} from '../mat-table-filter-triggerer';
 import {
   MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS,
@@ -25,7 +28,7 @@ import {MatTableFilterIntlService} from '../services/mat-table-filter-intl.servi
 })
 export class MatTableFilterButtonComponent
   extends MatTableTriggerer<MatTableDefaultFilterSelection>
-  implements OnInit
+  implements OnInit, OnDestroy
 {
   public intlService = inject(MatTableFilterIntlService);
   private cd = inject(ChangeDetectorRef);
@@ -35,13 +38,21 @@ export class MatTableFilterButtonComponent
     input: new FormControl(''),
   });
   _booleanFilterControl = new FormControl(false);
-  _filterMenuOpened = false;
-  _isFilterApplied = false;
+  _filterMenuOpened = signal(false);
+  _isFilterApplied = signal(false);
+  _isButtonVisible = computed(() => {
+    return (
+      this._filterMenuOpened() ||
+      this._isFilterApplied() ||
+      this.parentHovered()
+    );
+  });
   _requiresInput = true;
   _noInputRequireOperations: MatTableFilterDefaultOperator[] = [
     'BLANK',
     'NOT_BLANK',
   ];
+  _intlSubs?: Subscription;
 
   @ViewChild(MatMenuTrigger) private menuTrigger!: MatMenuTrigger;
 
@@ -51,9 +62,13 @@ export class MatTableFilterButtonComponent
     } else if (this.headerType === 'number') {
       this.operators = MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS;
     }
-    this.intlService.changed$
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.cd.markForCheck());
+    this._intlSubs = this.intlService.changed$.subscribe(() =>
+      this.cd.markForCheck()
+    );
+  }
+
+  ngOnDestroy(): void {
+    this._intlSubs?.unsubscribe();
   }
 
   handleFormSubmit() {
@@ -63,14 +78,14 @@ export class MatTableFilterButtonComponent
         operator: this._filterFormGroup.get('operator')?.value,
         input: this._filterFormGroup.get('input')?.value,
       });
-      this._isFilterApplied = true;
+      this._isFilterApplied.set(true);
       this.menuTrigger.closeMenu();
     }
   }
 
   handleBooleanFilter() {
-    this._isFilterApplied = !!this._booleanFilterControl.value;
-    if (this._isFilterApplied) {
+    this._isFilterApplied.set(!!this._booleanFilterControl.value);
+    if (this._isFilterApplied()) {
       this.selectedFilterSubject.next({
         key: this.columnKey,
         operator: 'EQUALS',
@@ -98,15 +113,15 @@ export class MatTableFilterButtonComponent
 
   handleCancelClick() {
     this.menuTrigger.closeMenu();
-    this._filterMenuOpened = false;
-    this._isFilterApplied = false;
+    this._filterMenuOpened.set(false);
+    this._isFilterApplied.set(false);
     this.selectedFilterSubject.next({
       key: this.columnKey,
     } as MatTableDefaultFilterSelection);
   }
 
   handleMenuClose(): void {
-    this._filterMenuOpened = false;
+    this._filterMenuOpened.set(false);
     if (
       !this._filterFormGroup.value?.input &&
       !this._filterFormGroup.value?.operator

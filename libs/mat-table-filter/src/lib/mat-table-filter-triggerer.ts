@@ -1,4 +1,10 @@
-import {InjectionToken, Type, inject} from '@angular/core';
+import {
+  InjectionToken,
+  Type,
+  WritableSignal,
+  inject,
+  signal,
+} from '@angular/core';
 import {MatColumnDef} from '@angular/material/table';
 import {Observable, Subject} from 'rxjs';
 import {MatTableFilterButtonComponent} from './mat-table-filter-button/mat-table-filter-button.component';
@@ -9,8 +15,8 @@ export class MatTableTriggerer<T extends MatTableDefaultFilterSelection> {
   protected matColumnDef = inject(MatColumnDef);
   protected selectedFilterSubject = new Subject<T>();
 
-  public headerType!: MatTableHeaderType;
-  public parentHovered!: boolean;
+  public headerType: MatTableHeaderType = 'string';
+  public parentHovered: WritableSignal<boolean> = signal(false);
 
   public get columnKey() {
     return this.matColumnDef.name;

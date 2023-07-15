@@ -1,18 +1,14 @@
 <div
   class="mat-table-filter-button-container"
-  [style.visibility]="
-    _filterMenuOpened || parentHovered || _isFilterApplied
-      ? 'visible'
-      : 'hidden'
-  "
+  [style.visibility]="_isButtonVisible() ? 'visible' : 'hidden'"
 >
   <button
     mat-icon-button
     class="mat-table-filter-button"
     *ngIf="headerType !== 'boolean'; else booleanFilter"
-    [ngClass]="{'mat-table-filter-button-indicator': _isFilterApplied}"
+    [ngClass]="{'mat-table-filter-button-indicator': _isFilterApplied()}"
     [matMenuTriggerFor]="filterMenu"
-    (menuOpened)="_filterMenuOpened = true"
+    (menuOpened)="_filterMenuOpened.set(true)"
     (menuClosed)="handleMenuClose()"
   >
     <mat-icon>filter_alt</mat-icon>

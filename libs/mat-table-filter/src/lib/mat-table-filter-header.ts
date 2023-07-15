@@ -33,14 +33,14 @@ export class MatTableFilterHeader implements AfterViewInit {
   @HostListener('mouseenter', ['$event'])
   handleMouseEnter() {
     if (this.triggererInstance) {
-      this.triggererInstance.parentHovered = true;
+      this.triggererInstance.parentHovered.set(true);
     }
   }
 
   @HostListener('mouseleave', ['$event'])
   handleMouseLeave() {
     if (this.triggererInstance) {
-      this.triggererInstance.parentHovered = false;
+      this.triggererInstance.parentHovered.set(false);
     }
   }
 
