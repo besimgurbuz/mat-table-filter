@@ -1,12 +1,13 @@
 {
   "name": "ng-mat-table-filter",
   "author": "Besim Gurbuz <contact@besimgurbuz.dev> (https://besimgurbuz.dev)",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/besimgurbuz/ng-mat-table-filter"
   },
-  "version": "16.0.0",
-  "description": "MatSort like super flexible filter directive for MatTable",
+  "version": "16.0.2",
+  "description": "MatSort like filter directive for Angular material's MatTable component",
   "peerDependencies": {
     "@angular/common": "^16.0.0",
     "@angular/core": "^16.0.0",

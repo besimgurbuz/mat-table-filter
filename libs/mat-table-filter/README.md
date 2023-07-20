@@ -1,7 +1,6 @@
 # ng-mat-table-filter
 
-This library adds MatSort like filter functionality to [MatTable component](https://material.angular.io/components/table/overview).
-Add filtering functionality to column definition you want by simply adding `mat-table-filter-header` just like `mat-sort-header`
+This library adds MatSort like column based filter functionality to [Angular Material MatTable component](https://material.angular.io/components/table/overview).
 
 ## How to use
 
@@ -60,16 +59,16 @@ To use both `mat-filter-table-header` and `mat-sort-header` together:
 
 ### Rendered template
 
-As default `MatTableFilterComponent` using for filter triggerer. But you can give your custom components that extends `MatTableTriggerer<T>` base class as well:
+As default `MatTableFilterComponent` using for filter triggerer. But you can give your custom components that extends `MatTableFilterTriggerer<T>` base class as well:
 
 ```ts
 import {MatTableModule} from '@angular/material/table';
-import {MAT_TABLE_TRIGGERER_TYPE, MatTableDefaultFilterSelection, MatTableFilterModule, MatTableTriggerer} from 'ng-mat-table-filter';
+import {MAT_TABLE_TRIGGERER_TYPE, MatTableFilterSelection, MatTableFilterModule, MatTableFilterTriggerer} from 'ng-mat-table-filter';
 
 @Component({
   /**/
 })
-class MyCustomComponent extends MatTableTriggerer<MatTableDefaultFilterSelection> {}
+class MyCustomComponent extends MatTableFilterTriggerer<MatTableFilterSelection> {}
 
 @NgModule({
   declarations: [MyComponent],
@@ -99,4 +98,4 @@ There are 3 different types of default `MatTableFilterButton`. `string`, `number
 </ng-container>
 ```
 
-[Live stackblitz demo](https://stackblitz-starters-ptbjcs.stackblitz.io)
+[Live stackblitz demo](https://stackblitz.com/edit/stackblitz-starters-ptbjcs?file=src%2Fmain.html)
