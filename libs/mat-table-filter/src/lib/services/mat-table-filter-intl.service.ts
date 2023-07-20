@@ -17,7 +17,7 @@ export class MatTableFilterIntlService implements MatTableFilterIntl {
     inputLabel: 'Input',
     operators: {
       EQUALS: 'Equals',
-      NOT_EQAUL: 'Not equal',
+      NOT_EQUAL: 'Not equal',
       CONTAINS: 'Contains',
       NOT_CONTAINS: 'Not contains',
       STARTS_WITH: 'Starts with',

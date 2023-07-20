@@ -15,7 +15,7 @@ export class MatTableFilterService {
     ) => boolean
   > = {
     EQUALS: (value, input) => value == input,
-    NOT_EQAUL: (value, input) => value != input,
+    NOT_EQUAL: (value, input) => value != input,
     LESS_THAN: (value, input) => Number(value) < Number(input),
     GREATER_THAN: (value, input) => Number(value) > Number(input),
     LESS_THAN_OR_EQUAL_TO: (value, input) => Number(value) <= Number(input),
