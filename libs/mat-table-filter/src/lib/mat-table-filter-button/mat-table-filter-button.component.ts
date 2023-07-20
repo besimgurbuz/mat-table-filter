@@ -12,12 +12,12 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {MatSelectChange} from '@angular/material/select';
 import {Subscription} from 'rxjs';
-import {MatTableTriggerer} from '../mat-table-filter-triggerer';
+import {MatTableFilterTriggerer} from '../mat-table-filter-triggerer';
 import {
   MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS,
   MAT_TABLE_FILTER_STRING_DEFAULT_OPERATORS,
-  MatTableDefaultFilterSelection,
-  MatTableFilterDefaultOperator,
+  MatTableFilterOperator,
+  MatTableFilterSelection,
 } from '../models/filter-selection';
 import {MatTableFilterIntlService} from '../services/mat-table-filter-intl.service';
 
@@ -27,12 +27,12 @@ import {MatTableFilterIntlService} from '../services/mat-table-filter-intl.servi
   styleUrls: ['./mat-table-filter-button.component.scss'],
 })
 export class MatTableFilterButtonComponent
-  extends MatTableTriggerer<MatTableDefaultFilterSelection>
+  extends MatTableFilterTriggerer<MatTableFilterSelection>
   implements OnInit, OnDestroy
 {
   public intlService = inject(MatTableFilterIntlService);
   private cd = inject(ChangeDetectorRef);
-  operators: MatTableFilterDefaultOperator[] = [];
+  operators: MatTableFilterOperator[] = [];
   _filterFormGroup: FormGroup = new FormGroup({
     operator: new FormControl('', [Validators.required]),
     input: new FormControl(''),
@@ -48,10 +48,7 @@ export class MatTableFilterButtonComponent
     );
   });
   _requiresInput = true;
-  _noInputRequireOperations: MatTableFilterDefaultOperator[] = [
-    'BLANK',
-    'NOT_BLANK',
-  ];
+  _noInputRequireOperations: MatTableFilterOperator[] = ['BLANK', 'NOT_BLANK'];
   _intlSubs?: Subscription;
 
   @ViewChild(MatMenuTrigger) private menuTrigger!: MatMenuTrigger;
@@ -94,7 +91,7 @@ export class MatTableFilterButtonComponent
     } else {
       this.selectedFilterSubject.next({
         key: this.columnKey,
-      } as MatTableDefaultFilterSelection);
+      } as MatTableFilterSelection);
     }
   }
 
@@ -117,7 +114,7 @@ export class MatTableFilterButtonComponent
     this._isFilterApplied.set(false);
     this.selectedFilterSubject.next({
       key: this.columnKey,
-    } as MatTableDefaultFilterSelection);
+    } as MatTableFilterSelection);
   }
 
   handleMenuClose(): void {

@@ -11,10 +11,10 @@ import {
 } from '@angular/core';
 import {Observable} from 'rxjs';
 import {
-  MAT_TABLE_TRIGGERER_TYPE,
-  MatTableTriggerer,
+  MAT_TABLE_FILTER_TRIGGERER_TYPE,
+  MatTableFilterTriggerer,
 } from './mat-table-filter-triggerer';
-import {MatTableDefaultFilterSelection} from './models';
+import {MatTableFilterSelection} from './models';
 import {MatTableHeaderType} from './models/header-type';
 
 @Component({
@@ -27,8 +27,8 @@ import {MatTableHeaderType} from './models/header-type';
 export class MatTableFilterHeader implements AfterViewInit {
   @Input({required: false}) matTableFilterHeaderType: MatTableHeaderType =
     'string';
-  private triggererComponentType = inject(MAT_TABLE_TRIGGERER_TYPE);
-  private triggererInstance?: MatTableTriggerer<MatTableDefaultFilterSelection>;
+  private triggererComponentType = inject(MAT_TABLE_FILTER_TRIGGERER_TYPE);
+  private triggererInstance?: MatTableFilterTriggerer<MatTableFilterSelection>;
 
   @HostListener('mouseenter', ['$event'])
   handleMouseEnter() {
@@ -48,7 +48,7 @@ export class MatTableFilterHeader implements AfterViewInit {
   triggererViewContainerRef!: ViewContainerRef;
 
   _triggererComponentRef!: ComponentRef<
-    MatTableTriggerer<MatTableDefaultFilterSelection>
+    MatTableFilterTriggerer<MatTableFilterSelection>
   >;
 
   ngAfterViewInit(): void {
@@ -60,7 +60,7 @@ export class MatTableFilterHeader implements AfterViewInit {
     this.triggererInstance.headerType = this.matTableFilterHeaderType;
   }
 
-  get selectedFilter$(): Observable<MatTableDefaultFilterSelection> {
+  get selectedFilter$(): Observable<MatTableFilterSelection> {
     return this._triggererComponentRef?.instance.selectedFilter$;
   }
 }

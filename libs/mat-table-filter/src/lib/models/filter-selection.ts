@@ -1,12 +1,12 @@
 import {ObjectValues} from './object-values';
 
-export type MatTableDefaultFilterSelection = {
+export type MatTableFilterSelection = {
   key: string;
-  operator: MatTableFilterDefaultOperator;
+  operator: MatTableFilterOperator;
   input?: string | boolean | number;
 };
 
-const MAT_TABLE_FILTER_STRING_DEFAULT_OPERATORS_MAP = {
+const MAT_TABLE_FILTER_STRING_OPERATORS_MAP = {
   EQUALS: 'EQUALS',
   NOT_EQUAL: 'NOT_EQUAL',
   CONTAINS: 'CONTAINS',
@@ -17,7 +17,7 @@ const MAT_TABLE_FILTER_STRING_DEFAULT_OPERATORS_MAP = {
   NOT_BLANK: 'NOT_BLANK',
 } as const;
 
-const MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS_MAP = {
+const MAT_TABLE_FILTER_NUMBER_OPERATORS_MAP = {
   EQUALS: 'EQUALS',
   NOT_EQUAL: 'NOT_EQUAL',
   LESS_THAN: 'LESS_THAN',
@@ -26,20 +26,20 @@ const MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS_MAP = {
   GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO',
 } as const;
 
-export type MatTableFilterStringDefaultOperator = ObjectValues<
-  typeof MAT_TABLE_FILTER_STRING_DEFAULT_OPERATORS_MAP
+export type MatTableFilterStringOperator = ObjectValues<
+  typeof MAT_TABLE_FILTER_STRING_OPERATORS_MAP
 >;
 
-export type MatTableFilterNumberDefaultOperator = ObjectValues<
-  typeof MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS_MAP
+export type MatTableFilterNumberOperator = ObjectValues<
+  typeof MAT_TABLE_FILTER_NUMBER_OPERATORS_MAP
 >;
 
-export type MatTableFilterDefaultOperator =
-  | MatTableFilterStringDefaultOperator
-  | MatTableFilterNumberDefaultOperator;
+export type MatTableFilterOperator =
+  | MatTableFilterStringOperator
+  | MatTableFilterNumberOperator;
 
-export const MAT_TABLE_FILTER_STRING_DEFAULT_OPERATORS: MatTableFilterStringDefaultOperator[] =
-  Object.values(MAT_TABLE_FILTER_STRING_DEFAULT_OPERATORS_MAP);
+export const MAT_TABLE_FILTER_STRING_DEFAULT_OPERATORS: MatTableFilterStringOperator[] =
+  Object.values(MAT_TABLE_FILTER_STRING_OPERATORS_MAP);
 
-export const MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS: MatTableFilterNumberDefaultOperator[] =
-  Object.values(MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS_MAP);
+export const MAT_TABLE_FILTER_NUMBER_DEFAULT_OPERATORS: MatTableFilterNumberOperator[] =
+  Object.values(MAT_TABLE_FILTER_NUMBER_OPERATORS_MAP);

@@ -1,14 +1,11 @@
 import {Injectable} from '@angular/core';
-import {
-  MatTableDefaultFilterSelection,
-  MatTableFilterDefaultOperator,
-} from '../models';
+import {MatTableFilterOperator, MatTableFilterSelection} from '../models';
 
 @Injectable()
 export class MatTableFilterService {
-  public currentFilters: MatTableDefaultFilterSelection[] = [];
+  public currentFilters: MatTableFilterSelection[] = [];
   private operators: Record<
-    MatTableFilterDefaultOperator,
+    MatTableFilterOperator,
     (
       value: string | number | boolean,
       input?: string | number | boolean
@@ -32,9 +29,9 @@ export class MatTableFilterService {
     data: Record<string, unknown>,
     filter: string
   ) => {
-    const filters: MatTableDefaultFilterSelection[] = JSON.parse(
+    const filters: MatTableFilterSelection[] = JSON.parse(
       filter
-    ) as MatTableDefaultFilterSelection[];
+    ) as MatTableFilterSelection[];
 
     if (!filters.length) return true;
 
@@ -50,7 +47,7 @@ export class MatTableFilterService {
     return !results.includes(false);
   };
 
-  updateFilter(selection: MatTableDefaultFilterSelection): void {
+  updateFilter(selection: MatTableFilterSelection): void {
     if (selection.operator === undefined) {
       this.currentFilters = this.currentFilters.filter(
         (filter) => filter.key !== selection.key
