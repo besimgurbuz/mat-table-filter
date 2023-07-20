@@ -99,4 +99,4 @@ There are 3 different types of default `MatTableFilterButton`. `string`, `number
 </ng-container>
 ```
 
-[Live stackblitz demo](https://stackblitz-starters-ptbjcs.stackblitz.io)
+[Live stackblitz demo](https://stackblitz.com/edit/stackblitz-starters-ptbjcs?file=src%2Fmain.html)
