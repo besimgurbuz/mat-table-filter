@@ -2,7 +2,7 @@
   "name": "demo",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "mat-table-filter",
+  "prefix": "ng-mat-table-filter",
   "sourceRoot": "apps/demo/src",
   "tags": [],
   "targets": {
@@ -100,6 +100,12 @@
           "ci": true,
           "codeCoverage": true
         }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "demo:build"
       }
     }
   }
